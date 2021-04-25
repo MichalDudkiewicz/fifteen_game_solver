@@ -2,10 +2,12 @@
 
 namespace fifteen
 {
-    Solution::Solution(const std::shared_ptr<Node> &solutionNode, unsigned int openStatesNumber, unsigned int closedStatesNumber)
+    Solution::Solution(const std::shared_ptr<Node> &solutionNode, unsigned int openStatesNumber, unsigned int closedStatesNumber, unsigned int maxRecursionDepth, long calculationMsTime)
     : mPathCost(solutionNode->pathCost()),
     mVisitedStatesNumber(openStatesNumber + closedStatesNumber),
-    mClosedStatesNumber(closedStatesNumber)
+    mClosedStatesNumber(closedStatesNumber),
+    mMaxRecursionDepth(maxRecursionDepth),
+    mCalculationMsTime(calculationMsTime)
     {
         auto node = solutionNode;
         while (node->parent())
@@ -46,7 +48,9 @@ namespace fifteen
 
         os << "Path cost: " << solution.mPathCost << std::endl
         << "Closed states number: " << solution.mClosedStatesNumber << std::endl
-        << "Visited states number: " << solution.mVisitedStatesNumber << std::endl;
+        << "Visited states number: " << solution.mVisitedStatesNumber << std::endl
+        << "Max recursion depth: " << solution.mMaxRecursionDepth << std::endl
+        << "Calculation time [ms]: " << solution.mCalculationMsTime << std::endl;
         return os;
     }
 }

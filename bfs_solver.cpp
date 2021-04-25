@@ -1,5 +1,6 @@
 #include <iostream>
 #include "bfs_solver.hpp"
+#include <chrono>
 
 namespace fifteen
 {
@@ -10,6 +11,8 @@ namespace fifteen
     Solution BFSSolver::solve(const std::shared_ptr<Node> &initialNode) {
         auto nodeToCheck = initialNode;
         auto stateToCheck = initialNode->state();
+        unsigned int maxRecursionDepth = 0;
+        auto started = std::chrono::high_resolution_clock::now();
         while(!isSolution(stateToCheck))
         {
             const auto neighbours = nodeToCheck->neighbours(mOperationOrder);
@@ -18,7 +21,10 @@ namespace fifteen
                 const auto neighbourState = neighbour->state();
                 if (isSolution(neighbourState))
                 {
-                    Solution solution(neighbour, mOpenList.size(), mClosedList.size());
+                    auto finished = std::chrono::high_resolution_clock::now();
+                    const auto calculationMsTime = std::chrono::duration_cast<std::chrono::milliseconds>(finished-started).count();
+                    maxRecursionDepth = std::max(maxRecursionDepth, neighbour->pathCost());
+                    Solution solution(neighbour, mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMsTime);
                     return solution;
                 }
                 else if (!isOpened(neighbour) && !isClosed(*neighbour))
@@ -31,7 +37,9 @@ namespace fifteen
             mOpenList.pop_front();
             stateToCheck = nodeToCheck->state();
         }
-        Solution solution(nodeToCheck, mOpenList.size(), mClosedList.size());
+        auto finished = std::chrono::high_resolution_clock::now();
+        const auto calculationMsTime = std::chrono::duration_cast<std::chrono::milliseconds>(finished-started).count();
+        Solution solution(nodeToCheck, mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMsTime);
         return solution;
     }
 }

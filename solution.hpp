@@ -8,7 +8,7 @@ namespace fifteen
 {
     class Solution {
     public:
-        Solution(const std::shared_ptr<Node> &solutionNode, unsigned int openStatesNumber, unsigned int closedStatesNumber);
+        Solution(const std::shared_ptr<Node> &solutionNode, unsigned int openStatesNumber, unsigned int closedStatesNumber, unsigned int maxRecursionDepth, long calculationMsTime);
 
         unsigned int pathCost() const;
 
@@ -28,8 +28,8 @@ namespace fifteen
         unsigned int mVisitedStatesNumber;
         unsigned int mClosedStatesNumber;
         std::list<Operation> mPath;
-//        unsigned int mMaxRecursionDepth;
-//        mCalculationTime
+        unsigned int mMaxRecursionDepth;
+        long mCalculationMsTime;
     };
 }
 

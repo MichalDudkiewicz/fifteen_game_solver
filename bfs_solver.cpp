@@ -22,9 +22,9 @@ namespace fifteen
                 if (isSolution(neighbourState))
                 {
                     auto finished = std::chrono::high_resolution_clock::now();
-                    const auto calculationMsTime = std::chrono::duration_cast<std::chrono::milliseconds>(finished-started).count();
+                    const auto calculationMicroSecTime = std::chrono::duration_cast<std::chrono::microseconds>(finished-started).count();
                     maxRecursionDepth = std::max(maxRecursionDepth, neighbour->pathCost());
-                    Solution solution(neighbour, mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMsTime);
+                    Solution solution(neighbour, mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMicroSecTime);
                     return solution;
                 }
                 else if (!isOpened(neighbour) && !isClosed(*neighbour))
@@ -38,8 +38,8 @@ namespace fifteen
             stateToCheck = nodeToCheck->state();
         }
         auto finished = std::chrono::high_resolution_clock::now();
-        const auto calculationMsTime = std::chrono::duration_cast<std::chrono::milliseconds>(finished-started).count();
-        Solution solution(nodeToCheck, mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMsTime);
+        const auto calculationMicroSecTime = std::chrono::duration_cast<std::chrono::microseconds>(finished-started).count();
+        Solution solution(nodeToCheck, mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMicroSecTime);
         return solution;
     }
 }

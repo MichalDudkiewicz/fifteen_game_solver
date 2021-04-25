@@ -8,7 +8,11 @@ namespace fifteen
 {
     class Solution {
     public:
-        Solution(const std::shared_ptr<Node> &solutionNode, unsigned int openStatesNumber, unsigned int closedStatesNumber, unsigned int maxRecursionDepth, long calculationMsTime);
+        Solution(const std::shared_ptr<Node> &solutionNode,
+                 unsigned int openStatesNumber,
+                 unsigned int closedStatesNumber,
+                 unsigned int maxRecursionDepth,
+                 long calculationMicroSecTime);
 
         unsigned int pathCost() const;
 
@@ -22,7 +26,7 @@ namespace fifteen
 
         unsigned int maxRecursionDepth() const;
 
-        long calculationMsTime() const;
+        long calculationMicroSecTime() const;
 
         friend std::ostream& operator<<(std::ostream& os, const Solution& solution);
 
@@ -33,7 +37,7 @@ namespace fifteen
         unsigned int mClosedStatesNumber;
         std::list<Operation> mPath;
         unsigned int mMaxRecursionDepth;
-        long mCalculationMsTime;
+        long mCalculationMicroSecTime;
     };
 }
 

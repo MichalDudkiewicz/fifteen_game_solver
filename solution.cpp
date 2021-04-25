@@ -2,12 +2,16 @@
 
 namespace fifteen
 {
-    Solution::Solution(const std::shared_ptr<Node> &solutionNode, unsigned int openStatesNumber, unsigned int closedStatesNumber, unsigned int maxRecursionDepth, long calculationMsTime)
+    Solution::Solution(const std::shared_ptr<Node> &solutionNode,
+                       unsigned int openStatesNumber,
+                       unsigned int closedStatesNumber,
+                       unsigned int maxRecursionDepth,
+                       long calculationMicroSecTime)
     : mPathCost(solutionNode->pathCost()),
     mVisitedStatesNumber(openStatesNumber + closedStatesNumber),
     mClosedStatesNumber(closedStatesNumber),
     mMaxRecursionDepth(maxRecursionDepth),
-    mCalculationMsTime(calculationMsTime)
+    mCalculationMicroSecTime(calculationMicroSecTime)
     {
         auto node = solutionNode;
         while (node->parent())
@@ -50,7 +54,7 @@ namespace fifteen
         << "Closed states number: " << solution.mClosedStatesNumber << std::endl
         << "Visited states number: " << solution.mVisitedStatesNumber << std::endl
         << "Max recursion depth: " << solution.mMaxRecursionDepth << std::endl
-        << "Calculation time [ms]: " << solution.mCalculationMsTime << std::endl;
+        << "Calculation time [micro sec]: " << solution.mCalculationMicroSecTime << std::endl;
         return os;
     }
 
@@ -58,7 +62,7 @@ namespace fifteen
         return mMaxRecursionDepth;
     }
 
-    long Solution::calculationMsTime() const {
-        return mCalculationMsTime;
+    long Solution::calculationMicroSecTime() const {
+        return mCalculationMicroSecTime;
     }
 }

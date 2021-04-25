@@ -2,6 +2,7 @@
 #include <optional>
 #include "operation.hpp"
 #include "state.hpp"
+#include <ostream>
 
 static constexpr uint8_t MAX_ROW_INDEX = 3;
 static constexpr uint8_t MAX_COLUMN_INDEX = 3;
@@ -64,6 +65,25 @@ namespace fifteen
                 return {};
         };
         return {};
+    }
+
+    std::ostream& operator<<(std::ostream& os, fifteen::Operation operation)
+    {
+        switch(operation) {
+            case Operation::UP:
+                os << 'U';
+                break;
+            case Operation::RIGHT:
+                os << 'R';
+                break;
+            case Operation::DOWN:
+                os << 'D';
+                break;
+            case Operation::LEFT:
+                os << 'L';
+                break;
+        }
+        return os;
     }
 }
 

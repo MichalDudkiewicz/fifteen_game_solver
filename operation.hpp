@@ -8,9 +8,11 @@
 namespace fifteen {
     class State;
 
-    enum class Operation {
+    enum class Operation : char {
         UP, RIGHT, DOWN, LEFT
     };
+
+    std::ostream &operator<<(std::ostream &os, Operation operation);
 
     std::optional<State> updateState(const std::shared_ptr<fifteen::State> &parentState, fifteen::Operation operationOnParent);
 }

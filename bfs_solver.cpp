@@ -18,7 +18,7 @@ namespace fifteen
                 const auto neighbourState = neighbour->state();
                 if (isSolution(neighbourState))
                 {
-                    Solution solution(neighbour->pathCost());
+                    Solution solution(neighbour, mOpenList.size(), mClosedList.size());
                     return solution;
                 }
                 else if (!isOpened(neighbour) && !isClosed(*neighbour))
@@ -31,7 +31,7 @@ namespace fifteen
             mOpenList.pop_front();
             stateToCheck = nodeToCheck->state();
         }
-        Solution solution(nodeToCheck->pathCost());
+        Solution solution(nodeToCheck, mOpenList.size(), mClosedList.size());
         return solution;
     }
 }

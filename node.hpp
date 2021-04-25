@@ -23,6 +23,10 @@ class Node : public std::enable_shared_from_this<Node> {
 
         std::list<std::shared_ptr<Node>> neighbours(const std::vector<Operation>& operationOrder);
 
+        const std::shared_ptr<Node>& parent() const;
+
+        std::optional<Operation> operationOnParent() const;
+
         bool operator==(const Node& otherNode) const;
 
     private:

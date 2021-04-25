@@ -6,7 +6,7 @@
 #include <cstdint>
 
 namespace fifteen {
-    enum class Operation;
+    enum class Operation : char;
 
     class State {
     using FifteenTable = std::vector<std::vector<uint8_t>>;

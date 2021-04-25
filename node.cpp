@@ -47,4 +47,12 @@ namespace fifteen
     bool Node::operator==(const Node &otherNode) const {
         return mState==otherNode.mState;
     }
+
+    const std::shared_ptr<Node>& Node::parent() const {
+        return mParentNode;
+    }
+
+    std::optional<Operation> Node::operationOnParent() const {
+        return mOperationOnParent;
+    }
 }

@@ -1,25 +1,30 @@
-#include <iostream>
-#include "bfs_solver.hpp"
 #include <chrono>
+#include "dfs_solver.hpp"
+#include <boost/range/adaptor/reversed.hpp>
+#include <iostream>
 
 namespace fifteen
 {
-    BFSSolver::BFSSolver(const std::vector<Operation> &operationOrder) : BlindSolver(operationOrder)
+
+    DFSSolver::DFSSolver(const std::vector<Operation> &operationOrder, unsigned int recursionDepthLimit)
+    : BlindSolver(operationOrder),
+    mRecursionDepthLimit(recursionDepthLimit)
     {
     }
 
-    Solution BFSSolver::solve(const std::shared_ptr<Node> &initialNode) {
+    Solution DFSSolver::solve(const std::shared_ptr<Node> &initialNode) {
         auto nodeToCheck = initialNode;
         auto stateToCheck = initialNode->state();
         unsigned int maxRecursionDepth = 0;
         auto started = std::chrono::high_resolution_clock::now();
         while(!isSolution(stateToCheck))
         {
+            const auto operation = nodeToCheck->operationOnParent();
             const auto neighbours = nodeToCheck->neighbours(mOperationOrder);
             const unsigned int nodeDepth = nodeToCheck->pathCost();
             const unsigned int neighboursDepth = nodeDepth + 1;
             maxRecursionDepth = std::max(maxRecursionDepth, neighboursDepth);
-            for (const auto& neighbour : neighbours)
+            for (const auto& neighbour : boost::adaptors::reverse(neighbours))
             {
                 const auto neighbourState = neighbour->state();
                 if (isSolution(neighbourState))
@@ -29,14 +34,14 @@ namespace fifteen
                     Solution solution(neighbour, mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMicroSecTime);
                     return solution;
                 }
-                else if (!isOpened(neighbour) && !isClosed(*neighbour))
+                else if (!isOpened(neighbour) && !isClosed(*neighbour) && neighboursDepth < mRecursionDepthLimit)
                 {
                     mOpenList.push_back(neighbour);
                 }
             }
             mClosedList.insert(*nodeToCheck);
-            nodeToCheck = mOpenList.front();
-            mOpenList.pop_front();
+            nodeToCheck = mOpenList.back();
+            mOpenList.pop_back();
             stateToCheck = nodeToCheck->state();
         }
         auto finished = std::chrono::high_resolution_clock::now();

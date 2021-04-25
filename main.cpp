@@ -4,7 +4,7 @@
 #include "bfs_solver.hpp"
 #include <memory>
 #include "operation.hpp"
-#include <iostream>
+#include "dfs_solver.hpp"
 
 using namespace fifteen;
 
@@ -16,9 +16,10 @@ int main() {
     const auto initialState = std::make_shared<State>(gameBoard);
     const auto initialNode = std::make_shared<Node>(initialState);
 
-    std::vector<Operation> operations = {Operation::UP, Operation::RIGHT, Operation::DOWN, Operation::LEFT};
-    const auto bfsSolver = std::make_shared<BFSSolver>(operations);
-    Graph graph(initialNode, bfsSolver);
+    std::vector<Operation> operations = {Operation::DOWN, Operation::UP, Operation::LEFT, Operation::RIGHT};
+    const auto solver = std::make_shared<DFSSolver>(operations, 10);
+//    const auto solver = std::make_shared<BFSSolver>(operations);
+    Graph graph(initialNode, solver);
     std::cout << graph.solution();
     return 0;
 }

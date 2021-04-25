@@ -20,6 +20,10 @@ namespace fifteen
 
         const std::shared_ptr<Node>& initialNode() const;
 
+        unsigned int maxRecursionDepth() const;
+
+        long calculationMsTime() const;
+
         friend std::ostream& operator<<(std::ostream& os, const Solution& solution);
 
     private:

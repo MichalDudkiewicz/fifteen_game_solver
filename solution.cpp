@@ -53,4 +53,12 @@ namespace fifteen
         << "Calculation time [ms]: " << solution.mCalculationMsTime << std::endl;
         return os;
     }
+
+    unsigned int Solution::maxRecursionDepth() const {
+        return mMaxRecursionDepth;
+    }
+
+    long Solution::calculationMsTime() const {
+        return mCalculationMsTime;
+    }
 }

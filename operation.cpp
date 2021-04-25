@@ -4,9 +4,6 @@
 #include "state.hpp"
 #include <ostream>
 
-static constexpr uint8_t MAX_ROW_INDEX = 3;
-static constexpr uint8_t MAX_COLUMN_INDEX = 3;
-
 namespace fifteen
 {
     std::vector<std::vector<uint8_t>> updateFifteenTable(const std::vector<std::vector<uint8_t>>& parentFifteenTable, std::pair<uint8_t, uint8_t> parentZeroPosition, std::pair<uint8_t, uint8_t> newZeroPosition)
@@ -22,6 +19,9 @@ namespace fifteen
     {
         const auto parentZeroPosition = parentState->zeroPosition();
         const auto parentFifteenTable = parentState->fifteenTable();
+        const unsigned int maxRowIndex = parentFifteenTable.size() - 1;
+        const unsigned int maxColumnIndex = parentFifteenTable.front().size() - 1;
+
         std::pair<uint8_t, uint8_t> newZeroPosition;
         std::vector<std::vector<uint8_t>> fifteenTable;
         switch(operationOnParent) {
@@ -35,7 +35,7 @@ namespace fifteen
                 }
                 break;
             case Operation::RIGHT:
-                if (parentZeroPosition.second < MAX_COLUMN_INDEX)
+                if (parentZeroPosition.second < maxColumnIndex)
                 {
                     newZeroPosition = {parentZeroPosition.first, parentZeroPosition.second + 1 };
                     fifteenTable = updateFifteenTable(parentFifteenTable, parentZeroPosition, newZeroPosition);
@@ -44,7 +44,7 @@ namespace fifteen
                 }
                 break;
             case Operation::DOWN:
-                if (parentZeroPosition.first < MAX_ROW_INDEX)
+                if (parentZeroPosition.first < maxRowIndex)
                 {
                     newZeroPosition = {parentZeroPosition.first + 1, parentZeroPosition.second};
                     fifteenTable = updateFifteenTable(parentFifteenTable, parentZeroPosition, newZeroPosition);

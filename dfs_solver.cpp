@@ -12,41 +12,44 @@ namespace fifteen
     }
 
     Solution DFSSolver::solve(const std::shared_ptr<Node> &initialNode) {
-        auto nodeToCheck = initialNode;
+        auto parent = initialNode;
         auto stateToCheck = initialNode->state();
         unsigned int maxRecursionDepth = 0;
-        std::vector<Operation> reversedOperationOrder (mOperationOrder.rbegin(), mOperationOrder.rend());
-        auto started = std::chrono::high_resolution_clock::now();
-        while(!isSolution(stateToCheck))
+        if (isSolution(stateToCheck))
         {
-            const auto operation = nodeToCheck->operationOnParent();
-            const auto neighbours = nodeToCheck->neighbours(reversedOperationOrder);
-            const unsigned int nodeDepth = nodeToCheck->pathCost();
-            const unsigned int neighboursDepth = nodeDepth + 1;
-            maxRecursionDepth = std::max(maxRecursionDepth, neighboursDepth);
-            for (const auto& neighbour : neighbours)
+            const auto calculationMicroSecTime = 0;
+            Solution solution(parent, mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMicroSecTime);
+            return solution;
+        }
+        std::vector<Operation> reversedOperationOrder (mOperationOrder.rbegin(), mOperationOrder.rend());
+        mClosedList.insert(*parent);
+        auto started = std::chrono::high_resolution_clock::now();
+        while(mOpenList.size() >= 0)
+        {
+            const auto operation = parent->operationOnParent();
+            const auto children = parent->neighbours(reversedOperationOrder);
+            const unsigned int parentDepth = parent->pathCost();
+            const unsigned int childrenDepth = parentDepth + 1;
+            maxRecursionDepth = std::max(maxRecursionDepth, childrenDepth);
+            for (const auto& child : children)
             {
-                const auto neighbourState = neighbour->state();
-                if (isSolution(neighbourState))
+                const auto childState = child->state();
+                if (isSolution(childState))
                 {
                     auto finished = std::chrono::high_resolution_clock::now();
                     const auto calculationMicroSecTime = std::chrono::duration_cast<std::chrono::microseconds>(finished-started).count();
-                    Solution solution(neighbour, mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMicroSecTime);
+                    Solution solution(child, mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMicroSecTime);
                     return solution;
                 }
-                else if (!isClosed(*neighbour) && neighboursDepth < mRecursionDepthLimit)
+                else if (!isClosed(*child) && childrenDepth < mRecursionDepthLimit)
                 {
-                    mClosedList.insert(*nodeToCheck);
-                    mOpenList.push_back(neighbour);
+                    mClosedList.insert(*child);
+                    mOpenList.push_back(child);
                 }
             }
-            nodeToCheck = mOpenList.back();
+            parent = mOpenList.back();
             mOpenList.pop_back();
-            stateToCheck = nodeToCheck->state();
         }
-        auto finished = std::chrono::high_resolution_clock::now();
-        const auto calculationMicroSecTime = std::chrono::duration_cast<std::chrono::microseconds>(finished-started).count();
-        Solution solution(nodeToCheck, mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMicroSecTime);
-        return solution;
+        throw std::runtime_error("no solution found for specified initial state and recursion depth. Try simplyfing the board to solve or changing recursion depth");
     }
 }

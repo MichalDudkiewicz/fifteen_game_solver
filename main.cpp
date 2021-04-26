@@ -9,10 +9,10 @@
 using namespace fifteen;
 
 int main() {
-    std::vector<std::vector<u_int8_t>> gameBoard = {{1, 2, 3, 7},
-                                                    {4, 5, 6, 11},
-                                                    {8, 9, 14, 10},
-                                                    {12, 13, 0, 15}};
+    std::vector<std::vector<u_int8_t>> gameBoard = {{1, 5, 2, 3},
+                                                    {4, 6, 10, 7},
+                                                    {8, 9, 11, 15},
+                                                    {12, 13, 0, 14}};
     const auto initialState = std::make_shared<State>(gameBoard);
     const auto initialNode = std::make_shared<Node>(initialState);
 

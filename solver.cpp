@@ -27,9 +27,6 @@ namespace fifteen
     }
 
     bool Solver::isClosed(const Node &node) const {
-        const auto it = std::find_if(mClosedList.begin(), mClosedList.end(), [&](const auto& closedNode){
-            return *(closedNode.state()) == *(node.state());
-        });
-        return it != mClosedList.end();
+        return mClosedList.count(node);
     }
 }

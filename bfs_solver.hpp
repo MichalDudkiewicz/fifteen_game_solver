@@ -14,7 +14,7 @@ namespace fifteen
         explicit BFSSolver(const std::vector<Operation>& operationOrder);
 
     public:
-        Solution solve(const std::shared_ptr<Node> &initialNode) override;
+        Solution solve(const std::shared_ptr<Node> &rootNode) override;
     };
 }
 

@@ -30,7 +30,7 @@ namespace fifteen
     {
     }
 
-    std::list<std::shared_ptr<Node>> Node::neighbours(const std::vector<Operation> &operationOrder) {
+    std::list<std::shared_ptr<Node>> Node::children(const std::vector<Operation> &operationOrder) {
         std::list<std::shared_ptr<Node>> listOfOrderedNeigbours;
         for (const auto& operation : operationOrder)
         {

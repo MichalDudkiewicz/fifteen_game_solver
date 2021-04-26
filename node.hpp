@@ -21,7 +21,7 @@ class Node : public std::enable_shared_from_this<Node> {
 
         unsigned int pathCost() const;
 
-        std::list<std::shared_ptr<Node>> neighbours(const std::vector<Operation>& operationOrder);
+        std::list<std::shared_ptr<Node>> children(const std::vector<Operation>& operationOrder);
 
         const std::shared_ptr<Node>& parent() const;
 

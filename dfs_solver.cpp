@@ -11,9 +11,9 @@ namespace fifteen
     {
     }
 
-    Solution DFSSolver::solve(const std::shared_ptr<Node> &initialNode) {
-        auto parent = initialNode;
-        auto stateToCheck = initialNode->state();
+    Solution DFSSolver::solve(const std::shared_ptr<Node> &rootNode) {
+        auto parent = rootNode;
+        auto stateToCheck = rootNode->state();
         unsigned int maxRecursionDepth = 0;
         if (isSolution(stateToCheck))
         {
@@ -24,10 +24,9 @@ namespace fifteen
         std::vector<Operation> reversedOperationOrder (mOperationOrder.rbegin(), mOperationOrder.rend());
         mClosedList.insert(*parent);
         auto started = std::chrono::high_resolution_clock::now();
-        while(mOpenList.size() >= 0)
+        while(true)
         {
-            const auto operation = parent->operationOnParent();
-            const auto children = parent->neighbours(reversedOperationOrder);
+            const auto children = parent->children(reversedOperationOrder);
             const unsigned int parentDepth = parent->pathCost();
             const unsigned int childrenDepth = parentDepth + 1;
             maxRecursionDepth = std::max(maxRecursionDepth, childrenDepth);
@@ -46,6 +45,10 @@ namespace fifteen
                     mClosedList.insert(*child);
                     mOpenList.push_back(child);
                 }
+            }
+            if (mOpenList.empty())
+            {
+                break;
             }
             parent = mOpenList.back();
             mOpenList.pop_back();

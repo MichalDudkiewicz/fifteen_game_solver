@@ -101,7 +101,7 @@ All spatial predicates may be negated, e.g.:
 
 [h4 Nearest neighbours queries]
 
-Nearest neighbours queries returns `__value__`s which are closest to some Geometry.
+Nearest children queries returns `__value__`s which are closest to some Geometry.
 The examples of k-NN queries are presented below. 5 `__value__`s nearest to the Geometry are orange.
 
 [table

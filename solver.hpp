@@ -13,7 +13,7 @@ namespace fifteen
     public:
         virtual ~Solver() = default;
 
-        virtual Solution solve(const std::shared_ptr<Node>& initialNode) = 0;
+        virtual Solution solve(const std::shared_ptr<Node>& rootNode) = 0;
 
     protected:
         bool isSolution(const std::shared_ptr<State> &state) const;

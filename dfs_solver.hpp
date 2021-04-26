@@ -10,7 +10,7 @@ namespace fifteen
         DFSSolver(const std::vector<Operation>& operationOrder, unsigned int recursionDepthLimit);
 
     public:
-        Solution solve(const std::shared_ptr<Node> &initialNode) override;
+        Solution solve(const std::shared_ptr<Node> &rootNode) override;
 
     private:
         unsigned int mRecursionDepthLimit;

@@ -38,7 +38,7 @@ namespace fifteen
                 }
                 else if (!isClosed(*child))
                 {
-                    mClosedList.insert(*parent);
+                    mClosedList.insert(*child);
                     mOpenList.push_back(child);
                 }
             }

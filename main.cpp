@@ -17,8 +17,8 @@ int main() {
     const auto initialNode = std::make_shared<Node>(initialState);
 
     std::vector<Operation> operations = {Operation::DOWN, Operation::LEFT, Operation::UP, Operation::RIGHT};
-    const auto solver = std::make_shared<DFSSolver>(operations, 20);
-//    const auto solver = std::make_shared<BFSSolver>(operations);
+//    const auto solver = std::make_shared<DFSSolver>(operations, 20);
+    const auto solver = std::make_shared<BFSSolver>(operations);
     Graph graph(initialNode, solver);
     std::cout << graph.solution();
     return 0;

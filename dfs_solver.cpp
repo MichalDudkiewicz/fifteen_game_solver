@@ -1,6 +1,5 @@
 #include <chrono>
 #include "dfs_solver.hpp"
-#include <boost/range/adaptor/reversed.hpp>
 #include <iostream>
 
 namespace fifteen
@@ -16,15 +15,16 @@ namespace fifteen
         auto nodeToCheck = initialNode;
         auto stateToCheck = initialNode->state();
         unsigned int maxRecursionDepth = 0;
+        std::vector<Operation> reversedOperationOrder (mOperationOrder.rbegin(), mOperationOrder.rend());
         auto started = std::chrono::high_resolution_clock::now();
         while(!isSolution(stateToCheck))
         {
             const auto operation = nodeToCheck->operationOnParent();
-            const auto neighbours = nodeToCheck->neighbours(mOperationOrder);
+            const auto neighbours = nodeToCheck->neighbours(reversedOperationOrder);
             const unsigned int nodeDepth = nodeToCheck->pathCost();
             const unsigned int neighboursDepth = nodeDepth + 1;
             maxRecursionDepth = std::max(maxRecursionDepth, neighboursDepth);
-            for (const auto& neighbour : boost::adaptors::reverse(neighbours))
+            for (const auto& neighbour : neighbours)
             {
                 const auto neighbourState = neighbour->state();
                 if (isSolution(neighbourState))

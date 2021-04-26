@@ -43,6 +43,7 @@ namespace fifteen
             nodeToCheck = mOpenList.back();
             mOpenList.pop_back();
             stateToCheck = nodeToCheck->state();
+//            std::cout<<mClosedList.size()+mOpenList.size()<<std::endl;
         }
         auto finished = std::chrono::high_resolution_clock::now();
         const auto calculationMicroSecTime = std::chrono::duration_cast<std::chrono::microseconds>(finished-started).count();

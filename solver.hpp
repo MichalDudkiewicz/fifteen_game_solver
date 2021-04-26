@@ -23,7 +23,7 @@ namespace fifteen
         bool isClosed(const Node &node) const;
 
     protected:
-        std::list<std::shared_ptr<Node>> mOpenList;
+        std::deque<std::shared_ptr<Node>> mOpenList;
         std::unordered_set<Node, NodeHash> mClosedList;
     };
 }

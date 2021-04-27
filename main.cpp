@@ -12,6 +12,8 @@
 #include <string>
 #include <ostream>
 #include "utils.hpp"
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/split.hpp>
 
 using namespace fifteen;
 
@@ -48,14 +50,59 @@ int main(int argc, char **argv) {
     std::string inputSolver = argv[1];
     std::string inputSolverParam = argv[2];
 
-    std::vector<std::vector<u_int8_t>> gameBoard = {{1, 2, 0, 3},
-                                                    {5, 6, 7, 4},
-                                                    {9, 10, 11, 8},
-                                                    {13, 14, 15, 12}};
+    std::string line;
+    std::ifstream puzzleToBeSolvedFile ("unsolved/" + inputFileNameTxt);
+    unsigned int rowsNumber = 0;
+    unsigned int columnsNumber = 0;
+
+    std::vector<std::vector<u_int8_t>> gameBoard;
+
+    if (puzzleToBeSolvedFile.is_open())
+    {
+        getline (puzzleToBeSolvedFile,line);
+        std::vector<std::string> row;
+        row.reserve(2);
+        boost::split(row, line, boost::is_any_of(" "));
+        rowsNumber = std::stoi(row.front());
+        columnsNumber = std::stoi(row.back());
+        row.clear();
+        row.reserve(columnsNumber);
+        gameBoard.reserve(rowsNumber);
+        unsigned int rowCounter = 0;
+        unsigned int columnCounter = 0;
+        while ( getline (puzzleToBeSolvedFile,line) )
+        {
+            rowCounter++;
+            boost::split(row, line, boost::is_any_of(" "));
+            std::vector<uint8_t> rowInt;
+            rowInt.reserve(columnsNumber);
+            for (const auto& elemStr : row)
+            {
+                rowInt.push_back(std::stoi(elemStr));
+                columnCounter++;
+            }
+            gameBoard.push_back(rowInt);
+            rowInt.clear();
+            row.clear();
+            if (columnCounter != columnsNumber)
+            {
+                throw std::runtime_error("incorrect number of columns");
+            }
+            columnCounter = 0;
+        }
+        puzzleToBeSolvedFile.close();
+        if (rowCounter != rowsNumber)
+        {
+            throw std::runtime_error("incorrect number of rows");
+        }
+    }
+    else
+    {
+        throw std::runtime_error("unable to open the file specified as the third param, which is: ./unsolved/" + inputFileNameTxt);
+    }
 
     const auto initialState = std::make_shared<State>(gameBoard);
     const auto initialNode = std::make_shared<Node>(initialState);
-
 
     std::shared_ptr<Solver> solver;
     std::ostringstream solverName;

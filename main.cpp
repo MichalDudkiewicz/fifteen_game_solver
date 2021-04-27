@@ -36,31 +36,55 @@ int main() {
 
 //    const auto solver = std::make_shared<HeuristicSolver<ManhattanHeuristic>>();
 
-    std::ostringstream fileNameStream;
-    fileNameStream << inputFileName << '_' << *solver << '_' << "sol.txt";
+    std::ostringstream fileNameStream, fileNameSolStream, fileNameStatsStream;
+    fileNameStream << inputFileName << '_' << *solver << '_';
     std::string fileName = fileNameStream.str();
+    fileNameSolStream << fileName << "sol.txt";
+    std::string fileNameSol = fileNameSolStream.str();
+    fileNameStatsStream << fileName << "stats.txt";
+    std::string fileNameStats = fileNameStatsStream.str();
     Graph graph(initialNode, solver);
     try {
         const auto solution = graph.solution();
         std::cout << solution << std::endl;
-        std::ofstream myfile (fileName);
-        if (myfile.is_open())
+        std::ofstream solFile (fileNameSol);
+        if (solFile.is_open())
         {
-            myfile << solution.pathCost() << "\n";
-            myfile << solution.path() << "\n";
-            myfile.close();
+            solFile << solution.pathCost() << "\n";
+            solFile << solution.path() << "\n";
+            solFile.close();
         }
-        else std::cout << "Unable to open file" << std::endl;
+        else std::cout << "Unable to open sol file" << std::endl;
+
+        std::ofstream statsFile (fileNameStats);
+        if (statsFile.is_open())
+        {
+            statsFile << solution.pathCost() << "\n";
+            statsFile << solution.visitedStatesNumber() << "\n";
+            statsFile << solution.closedStatesNumber() << "\n";
+            statsFile << solution.maxRecursionDepth() << "\n";
+            statsFile << (float)solution.calculationMicroSecTime()/1000.0f << "\n";
+            statsFile.close();
+        }
+        else std::cout << "Unable to open stats file" << std::endl;
     }
     catch (const std::runtime_error& iKnowThisIsUnproffesional) {
         std::cout<<std::endl<<"no solution found!" << std::endl;
-        std::ofstream myfile (fileName);
-        if (myfile.is_open())
+        std::ofstream solFile (fileNameSol);
+        if (solFile.is_open())
         {
-            myfile << -1 << "\n";
-            myfile.close();
+            solFile << -1 << "\n";
+            solFile.close();
         }
-        else std::cout << "Unable to open file" << std::endl;
+        else std::cout << "Unable to open sol file" << std::endl;
+
+        std::ofstream statsFile (fileNameStats);
+        if (statsFile.is_open())
+        {
+            statsFile << -1 << "\n";
+            statsFile.close();
+        }
+        else std::cout << "Unable to open stats file" << std::endl;
     }
 
     return 0;

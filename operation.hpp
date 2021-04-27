@@ -12,6 +12,8 @@ namespace fifteen {
         UP, RIGHT, DOWN, LEFT
     };
 
+    Operation fromChar(char operationChar);
+
     std::ostream &operator<<(std::ostream &os, Operation operation);
 
     std::optional<State> updateState(const std::shared_ptr<fifteen::State> &parentState, fifteen::Operation operationOnParent);

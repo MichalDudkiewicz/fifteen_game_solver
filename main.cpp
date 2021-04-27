@@ -15,8 +15,26 @@
 
 using namespace fifteen;
 
-int main() {
-    std::string inputFileName = "4x4_01_0001";
+std::vector<Operation> parseOperations(const std::string& operations)
+{
+    std::vector<Operation> operationsParsed;
+    operationsParsed.reserve(4);
+    for(const char& c : operations) {
+        operationsParsed.push_back(fromChar(c));
+    }
+    return operationsParsed;
+}
+
+int main(int argc, char **argv) {
+    if (argc < 4)
+    {
+        throw std::runtime_error("all first 3 arguments are obligatory");
+    }
+
+    std::string inputFileNameTxt = argv[3];
+    std::string inputFileName = inputFileNameTxt.substr(0, inputFileNameTxt.find('.'));
+    std::string inputSolver = argv[1];
+    std::string inputSolverParam = argv[2];
 
     std::vector<std::vector<u_int8_t>> gameBoard = {{1, 2, 0, 3},
                                                     {5, 6, 7, 4},
@@ -26,18 +44,46 @@ int main() {
     const auto initialState = std::make_shared<State>(gameBoard);
     const auto initialNode = std::make_shared<Node>(initialState);
 
-    std::vector<Operation> operations = {Operation::DOWN, Operation::LEFT, Operation::UP, Operation::RIGHT};
 
-//    const auto solver = std::make_shared<DFSSolver>(operations, 20);
-
-//    const auto solver = std::make_shared<BFSSolver>(operations);
-
-//    const auto solver = std::make_shared<HeuristicSolver<HammingHeuristic>>();
-
-    const auto solver = std::make_shared<HeuristicSolver<ManhattanHeuristic>>();
+    std::shared_ptr<Solver> solver;
+    std::ostringstream solverName;
+    if (inputSolver == "dfs")
+    {
+        const auto operations = parseOperations(inputSolverParam);
+        const unsigned int maxRecursionDepth = 20;
+        solver = std::make_shared<DFSSolver>(operations, maxRecursionDepth);
+        solverName << *(std::dynamic_pointer_cast<DFSSolver>(solver));
+    }
+    else if (inputSolver == "bfs")
+    {
+        const auto operations = parseOperations(inputSolverParam);
+        solver = std::make_shared<BFSSolver>(operations);
+        solverName << *(std::dynamic_pointer_cast<BFSSolver>(solver));
+    }
+    else if (inputSolver == "astr")
+    {
+        if (inputSolverParam == "hamm")
+        {
+            solver = std::make_shared<HeuristicSolver<HammingHeuristic>>();
+            solverName << *(std::dynamic_pointer_cast<HeuristicSolver<HammingHeuristic>>(solver));
+        }
+        else if (inputSolverParam == "manh")
+        {
+            solver = std::make_shared<HeuristicSolver<ManhattanHeuristic>>();
+            solverName << *(std::dynamic_pointer_cast<HeuristicSolver<ManhattanHeuristic>>(solver));
+        }
+        else
+        {
+            throw std::runtime_error("incorrect second argument");
+        }
+    }
+    else
+    {
+        throw std::runtime_error("incorrect first argument");
+    }
 
     std::ostringstream fileNameStream, fileNameSolStream, fileNameStatsStream;
-    fileNameStream << inputFileName << '_' << *solver << '_';
+    fileNameStream << inputFileName << '_' << solverName.str() << '_';
     std::string fileName = fileNameStream.str();
     fileNameSolStream << fileName << "sol.txt";
     std::string fileNameSol = fileNameSolStream.str();

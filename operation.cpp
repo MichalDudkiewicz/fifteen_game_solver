@@ -85,5 +85,29 @@ namespace fifteen
         }
         return os;
     }
+
+    Operation fromChar(char operationChar)
+    {
+        if (operationChar == 'U')
+        {
+            return Operation::UP;
+        }
+        else if (operationChar == 'R')
+        {
+            return Operation::RIGHT;
+        }
+        else if (operationChar == 'D')
+        {
+            return Operation::DOWN;
+        }
+        else if (operationChar == 'L')
+        {
+            return Operation::LEFT;
+        }
+        else
+        {
+            throw std::runtime_error("incorrect operation char");
+        }
+    }
 }
 

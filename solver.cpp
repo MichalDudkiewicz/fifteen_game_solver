@@ -19,13 +19,6 @@ namespace fifteen
         return true;
     }
 
-    bool Solver::isOpened(const std::shared_ptr<Node> &node) const {
-        const auto it = std::find_if(mOpenList.begin(), mOpenList.end(), [&](const auto& openedNode){
-            return *(openedNode->state()) == *(node->state());
-        });
-        return it != mOpenList.end();
-    }
-
     bool Solver::isClosed(const Node &node) const {
         return mClosedList.count(node);
     }

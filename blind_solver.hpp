@@ -12,7 +12,10 @@ namespace fifteen
     protected:
         explicit BlindSolver(std::vector<Operation> operationOrder);
 
+        bool isOpened(const std::shared_ptr<Node> &node) const override;
+
     protected:
+        std::deque<std::shared_ptr<Node>> mOpenList;
         std::vector<Operation> mOperationOrder;
     };
 }

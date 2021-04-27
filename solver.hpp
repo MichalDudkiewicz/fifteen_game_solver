@@ -18,12 +18,11 @@ namespace fifteen
     protected:
         bool isSolution(const std::shared_ptr<State> &state) const;
 
-        bool isOpened(const std::shared_ptr<Node> &node) const;
+        virtual bool isOpened(const std::shared_ptr<Node> &node) const = 0;
 
         bool isClosed(const Node &node) const;
 
     protected:
-        std::deque<std::shared_ptr<Node>> mOpenList;
         std::unordered_set<Node, NodeHash> mClosedList;
     };
 }

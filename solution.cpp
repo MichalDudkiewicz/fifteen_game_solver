@@ -1,4 +1,5 @@
 #include "solution.hpp"
+#include "utils.hpp"
 
 namespace fifteen
 {
@@ -45,12 +46,14 @@ namespace fifteen
 
     std::ostream &operator<<(std::ostream &os, const Solution &solution) {
         os << "Solution: ";
-        for (const auto& operation: solution.path())
+        if (solution.mSolutionFound)
         {
-            os << operation;
+            os << solution.path();
+        } else
+        {
+            os << "not found";
         }
         os << std::endl;
-
         os << "Path cost: " << solution.mPathCost << std::endl
         << "Closed states number: " << solution.mClosedStatesNumber << std::endl
         << "Visited states number: " << solution.mVisitedStatesNumber << std::endl

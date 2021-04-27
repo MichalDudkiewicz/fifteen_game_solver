@@ -8,7 +8,7 @@ namespace fifteen
     }
 
     bool Heuristic::operator()(const std::shared_ptr<Node> &firstNode, const std::shared_ptr<Node> &secondNode) const {
-        return estimatePathCostToTarget(firstNode) < estimatePathCostToTarget(secondNode);
+        return estimatePathCostToTarget(firstNode) > estimatePathCostToTarget(secondNode);
     }
 }
 

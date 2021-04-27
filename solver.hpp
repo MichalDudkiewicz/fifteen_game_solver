@@ -18,8 +18,6 @@ namespace fifteen
     protected:
         bool isSolution(const std::shared_ptr<State> &state) const;
 
-        virtual bool isOpened(const std::shared_ptr<Node> &node) const = 0;
-
         bool isClosed(const Node &node) const;
 
     protected:

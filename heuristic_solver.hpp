@@ -2,6 +2,7 @@
 #define FIFTEEN_GAME_SOLVER_HEURISTIC_SOLVER_HPP
 
 #include <queue>
+#include <chrono>
 #include "solver.hpp"
 #include "heuristic.hpp"
 #include "solution.hpp"
@@ -14,7 +15,7 @@ namespace fifteen
         Solution solve(const std::shared_ptr<Node> &rootNode) override;
 
     private:
-        std::priority_queue<std::shared_ptr<Node>, std::list<std::shared_ptr<Node>>, Heuristic> mOpenList;
+        std::priority_queue<std::shared_ptr<Node>, std::deque<std::shared_ptr<Node>>, Heuristic> mOpenList;
     };
 
     template <class Heuristic>

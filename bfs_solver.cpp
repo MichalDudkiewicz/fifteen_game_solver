@@ -50,7 +50,11 @@ namespace fifteen
             parent = mOpenList.front();
             mOpenList.pop_front();
         }
-        throw std::runtime_error("no solution found for specified initial state and recursion depth. Try simplyfing the board.");
+        // no solution found
+        auto finished = std::chrono::high_resolution_clock::now();
+        const auto calculationMicroSecTime = std::chrono::duration_cast<std::chrono::microseconds>(finished-started).count();
+        Solution solution(mOpenList.size(), mClosedList.size(), maxRecursionDepth, calculationMicroSecTime);
+        return solution;
     }
 
     std::ostream &operator<<(std::ostream &os, const BFSSolver &solver) {

@@ -11,7 +11,8 @@ namespace fifteen
     mVisitedStatesNumber(openStatesNumber + closedStatesNumber),
     mClosedStatesNumber(closedStatesNumber),
     mMaxRecursionDepth(maxRecursionDepth),
-    mCalculationMicroSecTime(calculationMicroSecTime)
+    mCalculationMicroSecTime(calculationMicroSecTime),
+    mSolutionFound(true)
     {
         auto node = solutionNode;
         while (node->parent())
@@ -64,5 +65,19 @@ namespace fifteen
 
     long Solution::calculationMicroSecTime() const {
         return mCalculationMicroSecTime;
+    }
+
+    bool Solution::solutionFound() const {
+        return mSolutionFound;
+    }
+
+    Solution::Solution(unsigned int openStatesNumber, unsigned int closedStatesNumber, unsigned int maxRecursionDepth,
+                       long calculationMicroSecTime)
+            : mVisitedStatesNumber(openStatesNumber + closedStatesNumber),
+              mClosedStatesNumber(closedStatesNumber),
+              mMaxRecursionDepth(maxRecursionDepth),
+              mCalculationMicroSecTime(calculationMicroSecTime),
+              mSolutionFound(false)
+    {
     }
 }

@@ -18,7 +18,7 @@ using namespace fifteen;
 int main() {
     std::string inputFileName = "4x4_01_0001";
 
-    std::vector<std::vector<u_int8_t>> gameBoard = {{1, 2, 3, 0},
+    std::vector<std::vector<u_int8_t>> gameBoard = {{1, 2, 0, 3},
                                                     {5, 6, 7, 4},
                                                     {9, 10, 11, 8},
                                                     {13, 14, 15, 12}};
@@ -28,13 +28,13 @@ int main() {
 
     std::vector<Operation> operations = {Operation::DOWN, Operation::LEFT, Operation::UP, Operation::RIGHT};
 
-    const auto solver = std::make_shared<DFSSolver>(operations, 20);
+//    const auto solver = std::make_shared<DFSSolver>(operations, 20);
 
 //    const auto solver = std::make_shared<BFSSolver>(operations);
 
 //    const auto solver = std::make_shared<HeuristicSolver<HammingHeuristic>>();
 
-//    const auto solver = std::make_shared<HeuristicSolver<ManhattanHeuristic>>();
+    const auto solver = std::make_shared<HeuristicSolver<ManhattanHeuristic>>();
 
     std::ostringstream fileNameStream, fileNameSolStream, fileNameStatsStream;
     fileNameStream << inputFileName << '_' << *solver << '_';
@@ -44,48 +44,38 @@ int main() {
     fileNameStatsStream << fileName << "stats.txt";
     std::string fileNameStats = fileNameStatsStream.str();
     Graph graph(initialNode, solver);
-    try {
-        const auto solution = graph.solution();
-        std::cout << solution << std::endl;
-        std::ofstream solFile (fileNameSol);
-        if (solFile.is_open())
+
+
+    const auto solution = graph.solution();
+    std::cout << solution << std::endl;
+    std::ofstream solFile (fileNameSol);
+    if (solFile.is_open())
+    {
+        if (solution.solutionFound())
         {
             solFile << solution.pathCost() << "\n";
             solFile << solution.path() << "\n";
-            solFile.close();
         }
-        else std::cout << "Unable to open sol file" << std::endl;
-
-        std::ofstream statsFile (fileNameStats);
-        if (statsFile.is_open())
+        else
         {
-            statsFile << solution.pathCost() << "\n";
-            statsFile << solution.visitedStatesNumber() << "\n";
-            statsFile << solution.closedStatesNumber() << "\n";
-            statsFile << solution.maxRecursionDepth() << "\n";
-            statsFile << (float)solution.calculationMicroSecTime()/1000.0f << "\n";
-            statsFile.close();
-        }
-        else std::cout << "Unable to open stats file" << std::endl;
-    }
-    catch (const std::runtime_error& iKnowThisIsUnproffesional) {
-        std::cout<<std::endl<<"no solution found!" << std::endl;
-        std::ofstream solFile (fileNameSol);
-        if (solFile.is_open())
-        {
+            std::cout<<std::endl<<"no solution found!" << std::endl;
             solFile << -1 << "\n";
-            solFile.close();
         }
-        else std::cout << "Unable to open sol file" << std::endl;
-
-        std::ofstream statsFile (fileNameStats);
-        if (statsFile.is_open())
-        {
-            statsFile << -1 << "\n";
-            statsFile.close();
-        }
-        else std::cout << "Unable to open stats file" << std::endl;
+        solFile.close();
     }
+    else std::cout << "Unable to open sol file" << std::endl;
+
+    std::ofstream statsFile (fileNameStats);
+    if (statsFile.is_open())
+    {
+        statsFile << (solution.solutionFound() ? solution.pathCost() : -1) << "\n";
+        statsFile << solution.visitedStatesNumber() << "\n";
+        statsFile << solution.closedStatesNumber() << "\n";
+        statsFile << solution.maxRecursionDepth() << "\n";
+        statsFile << (float)solution.calculationMicroSecTime()/1000.0f << "\n";
+        statsFile.close();
+    }
+    else std::cout << "Unable to open stats file" << std::endl;
 
     return 0;
 }

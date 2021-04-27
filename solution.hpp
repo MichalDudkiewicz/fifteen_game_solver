@@ -15,6 +15,11 @@ namespace fifteen
                  unsigned int maxRecursionDepth,
                  long calculationMicroSecTime);
 
+        Solution(unsigned int openStatesNumber,
+                 unsigned int closedStatesNumber,
+                 unsigned int maxRecursionDepth,
+                 long calculationMicroSecTime);
+
         unsigned int pathCost() const;
 
         unsigned int visitedStatesNumber() const;
@@ -29,6 +34,8 @@ namespace fifteen
 
         long calculationMicroSecTime() const;
 
+        bool solutionFound() const;
+
         friend std::ostream& operator<<(std::ostream& os, const Solution& solution);
 
     private:
@@ -39,6 +46,7 @@ namespace fifteen
         std::list<Operation> mPath;
         unsigned int mMaxRecursionDepth;
         long mCalculationMicroSecTime;
+        bool mSolutionFound;
     };
 }
 

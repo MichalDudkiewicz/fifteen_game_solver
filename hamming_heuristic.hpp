@@ -8,7 +8,7 @@ namespace fifteen
 {
     class HammingHeuristic : public Heuristic
     {
-    public:
+    private:
         unsigned int estimateMinPathCostToTarget(const std::shared_ptr<Node> &node) const override;
     };
 }

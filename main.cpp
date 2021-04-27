@@ -7,6 +7,7 @@
 #include "dfs_solver.hpp"
 #include "hamming_heuristic.hpp"
 #include "heuristic_solver.hpp"
+#include "manhattan_heuristic.hpp"
 
 using namespace fifteen;
 
@@ -24,7 +25,9 @@ int main() {
 
 //    const auto solver = std::make_shared<BFSSolver>(operations);
 
-    const auto solver = std::make_shared<HeuristicSolver<HammingHeuristic>>();
+//    const auto solver = std::make_shared<HeuristicSolver<HammingHeuristic>>();
+
+    const auto solver = std::make_shared<HeuristicSolver<ManhattanHeuristic>>();
 
     Graph graph(initialNode, solver);
     std::cout << graph.solution();

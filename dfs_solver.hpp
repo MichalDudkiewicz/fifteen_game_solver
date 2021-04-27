@@ -12,6 +12,8 @@ namespace fifteen
     public:
         Solution solve(const std::shared_ptr<Node> &rootNode) override;
 
+        friend std::ostream &operator<<(std::ostream & os, const DFSSolver& solver);
+
     private:
         unsigned int mRecursionDepthLimit;
     };

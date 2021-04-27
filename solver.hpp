@@ -15,6 +15,8 @@ namespace fifteen
 
         virtual Solution solve(const std::shared_ptr<Node>& rootNode) = 0;
 
+        friend std::ostream &operator<<(std::ostream & /* os */, const Solver& /* solver */);
+
     protected:
         bool isSolution(const std::shared_ptr<State> &state) const;
 

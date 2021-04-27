@@ -13,6 +13,8 @@ namespace fifteen
     public:
         explicit BFSSolver(const std::vector<Operation>& operationOrder);
 
+        friend std::ostream &operator<<(std::ostream & os, const BFSSolver& solver);
+
     public:
         Solution solve(const std::shared_ptr<Node> &rootNode) override;
     };

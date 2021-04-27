@@ -1,6 +1,7 @@
 #include <iostream>
 #include "bfs_solver.hpp"
 #include <chrono>
+#include "utils.hpp"
 
 namespace fifteen
 {
@@ -50,5 +51,10 @@ namespace fifteen
             mOpenList.pop_front();
         }
         throw std::runtime_error("no solution found for specified initial state and recursion depth. Try simplyfing the board.");
+    }
+
+    std::ostream &operator<<(std::ostream &os, const BFSSolver &solver) {
+        os << "bfs_" << solver.mOperationOrder;
+        return os;
     }
 }

@@ -25,4 +25,8 @@ namespace fifteen
         }
         return totalMetricValue;
     }
+
+    std::string ManhattanHeuristic::name() {
+        return "manh";
+    }
 }

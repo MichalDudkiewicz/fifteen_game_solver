@@ -14,6 +14,9 @@ namespace fifteen
     public:
         Solution solve(const std::shared_ptr<Node> &rootNode) override;
 
+        template<class Heuristic2>
+        friend std::ostream &operator<<(std::ostream &os, const HeuristicSolver& solver);
+
     private:
         std::priority_queue<std::shared_ptr<Node>, std::deque<std::shared_ptr<Node>>, Heuristic> mOpenList;
     };
@@ -61,7 +64,13 @@ namespace fifteen
             parent = mOpenList.top();
             mOpenList.pop();
         }
-        throw std::runtime_error("no solution found for specified initial state and recursion depth. Try simplyfing the board.");
+        throw std::runtime_error("no solution found for specified initial state. Try simplyfing the board.");
+    }
+
+    template<class Heuristic>
+    std::ostream &operator<<(std::ostream &os, const HeuristicSolver<Heuristic> &manhattanSolver) {
+        os << "astr_" << Heuristic::name();
+        return os;
     }
 }
 

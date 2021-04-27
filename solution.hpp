@@ -3,6 +3,7 @@
 
 #include "node.hpp"
 #include <memory>
+#include <string>
 
 namespace fifteen
 {

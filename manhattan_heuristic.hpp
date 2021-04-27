@@ -8,6 +8,9 @@ namespace fifteen
     class ManhattanHeuristic : public Heuristic {
     private:
         unsigned int estimateMinPathCostToTarget(const std::shared_ptr<Node> &node) const override;
+
+    public:
+        static std::string name();
     };
 }
 

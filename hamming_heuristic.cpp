@@ -22,4 +22,8 @@ namespace fifteen
         }
         return elementsNotInPlace;
     }
+
+    std::string HammingHeuristic::name() {
+        return "hamm";
+    }
 }

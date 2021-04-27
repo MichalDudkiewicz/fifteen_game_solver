@@ -1,6 +1,7 @@
 #include <chrono>
 #include "dfs_solver.hpp"
 #include <iostream>
+#include "utils.hpp"
 
 namespace fifteen
 {
@@ -54,5 +55,10 @@ namespace fifteen
             mOpenList.pop_back();
         }
         throw std::runtime_error("no solution found for specified initial state and recursion depth. Try simplyfing the board to solve or changing recursion depth");
+    }
+
+    std::ostream &operator<<(std::ostream &os, const DFSSolver &solver) {
+        os << "dfs_" << solver.mOperationOrder;
+        return os;
     }
 }

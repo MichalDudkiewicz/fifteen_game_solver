@@ -2,6 +2,7 @@
 #define FIFTEEN_GAME_SOLVER_HEURISTIC_HPP
 
 #include "node.hpp"
+#include <string>
 
 namespace fifteen
 {

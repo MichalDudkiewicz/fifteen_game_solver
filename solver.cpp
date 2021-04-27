@@ -22,4 +22,8 @@ namespace fifteen
     bool Solver::isClosed(const Node &node) const {
         return mClosedList.count(node);
     }
+
+    std::ostream &operator<<(std::ostream& /* os */, const Solver& /* solver */) {
+        throw std::runtime_error("probably shouldn't be called");
+    }
 }

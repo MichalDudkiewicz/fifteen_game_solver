@@ -35,8 +35,8 @@ std::vector<Operation> parseOperations(const std::string& operations)
  * Uwaga: ostatnie dwa parametry wywołania nie są obowiązkowe. Ich podanie nic nie zmienia w działaniu programu.
  *
  * Program należy uruchomić w katalogu, w którym znajduje się podkatalog o nazwie 'unsolved'.
- * Z niego pobierane są układy w formie plików txt do rozwiązania. Układy rozwiązane są zapisywane w podkatalogu 'solved'
- * (nie ma potrzeby tworzyć go ręcznie, jest on tworzony automatycznie).
+ * W razie potrzeby należy utworzyć go ręcznie. Z niego pobierane są układy w formie plików txt do rozwiązania.
+ * Układy rozwiązane są zapisywane w bieżącym katalogu, w którym uruchomiony jest program.
  *
  */
 int main(int argc, char **argv) {

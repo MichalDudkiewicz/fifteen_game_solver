@@ -8,6 +8,7 @@
 #include <list>
 #include <functional>
 #include <boost/functional/hash/hash.hpp>
+#include "type_defs.hpp"
 
 namespace fifteen
 {

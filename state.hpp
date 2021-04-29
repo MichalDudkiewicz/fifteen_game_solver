@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <cstdint>
+#include "type_defs.hpp"
 
 namespace fifteen {
     enum class Operation : char;

@@ -5,6 +5,7 @@
 
 #include "node.hpp"
 #include "solver.hpp"
+#include "type_defs.hpp"
 
 namespace fifteen
 {

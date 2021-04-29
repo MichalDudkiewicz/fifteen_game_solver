@@ -1,6 +1,6 @@
 # fifteen_game_solver
 
-Program do rozwiązywania fifteen puzzle o dowolnym prostokątnym rozmiarze.
+Program do rozwiązywania fifteen puzzle o dowolnym prostokątnym rozmiarze w trybie wsadowym.
 
 Instrukcja obsługi programu oraz opis parametrów wywołania są dostępne tutaj: https://ftims.edu.p.lodz.pl/mod/page/view.php?id=59205
 

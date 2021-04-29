@@ -169,7 +169,7 @@ int main(int argc, char **argv) {
         }
         solFile.close();
     }
-    else std::cout << "Unable to open sol file" << std::endl;
+    else std::cout << "Unable to open sol file. Try running with admin privileges." << std::endl;
 
     std::ofstream statsFile (fileNameStats);
     if (statsFile.is_open())
@@ -181,7 +181,7 @@ int main(int argc, char **argv) {
         statsFile << (float)solution.calculationMicroSecTime()/1000.0f << "\n";
         statsFile.close();
     }
-    else std::cout << "Unable to open stats file" << std::endl;
+    else std::cout << "Unable to open stats file. Try running with admin privileges." << std::endl;
 
     return 0;
 }
